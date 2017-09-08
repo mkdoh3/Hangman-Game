@@ -9,7 +9,7 @@ var quotes = {
   "Han Solo" : "Great, kid. Don't get cocky.",
   "Chewbacca" : "GGGWARRRHHWWWW!",
   "Boba Fett" : "As you wish. ",
-  "Lando Calrissian" : "Why, you slimy, double-crossing, no-good swindler.",
+  "Lando Calrissian" : "Hello, what have we here?",
   "Admiral Akbar" : "It's a trap!!"
 };
 
