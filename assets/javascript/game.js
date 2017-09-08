@@ -1,7 +1,6 @@
 var wordBank = ["Darth Vader", "Leia Organa", "Luke Skywalker", "Han Solo", "Chewbacca", "Boba Fett", "Lando Calrissian", "Admiral Akbar"];
 
 
-
 //would like to eventually use this to update html with a corresponding quote on win
 var quotes = {
   "Darth Vader" : "I find your lack of faith disturbing.",
@@ -13,6 +12,20 @@ var quotes = {
   "Lando Calrissian" : "Why, you slimy, double-crossing, no-good swindler.",
   "Admiral Akbar" : "It's a trap!!"
 };
+
+var images = {
+  "Darth Vader" : "assets/images/vader.jpg",
+  "Leia Organa" : "assets/images/leia.jpg",
+  "Luke Skywalker" : "assets/images/luke.jpg",
+  "Han Solo" : "assets/images/han.jpg",
+  "Chewbacca" : "assets/images/chewie.jpeg",
+  "Boba Fett" : "assets/images/boba.jpg",
+  "Lando Calrissian" : "assets/images/lando.jpg",
+  "Admiral Akbar" : "assets/images/akbar.jpg"
+};
+
+// var startAudio = Audio(assets/audio/start.wav);
+// startAudio.play();
 
 
 // quotes[wordBank[2]]
@@ -46,6 +59,8 @@ function wordConverter(str){
   console.log(str);
   str.forEach(function(x){
     if(x === " "){
+      //html wouldn't update with a whitespace even though it existed in the array, 
+      //so this is my busted work around.. probs a better way to do this
       hiddenWord.push("&nbsp");
     }
     else {
@@ -91,10 +106,13 @@ function checkGuess(guess){
 // or if chances or depleted, update win variable and html
 
 function checkWin(){
+  //.replace to fix my goofy work around from earlier to make the array's equal again
   console.log(hiddenWord.join('').replace("&nbsp", " "), curWord);
   if(hiddenWord.join('').replace("&nbsp", " ") === curWord){
     winCount++;
     document.getElementById('wins').innerHTML = winCount;
+    document.getElementById('win-img').src = images[curWord];
+    document.getElementById('win-quote').innerHTML ='"' +quotes[curWord] + '"';
     return true;
   }
   else {
@@ -107,7 +125,9 @@ function checkWin(){
 function checkLose(){
   if(guessCount === 0){
     loseCount++;
-    document.getElementById('loses').innerHTML = loseCount; 
+    document.getElementById('loses').innerHTML = loseCount;
+    document.getElementById('win-img').src = "assets/images/lose.gif";
+    document.getElementById('win-quote').innerHTML ="You Lose!";
     return true;
   }
   else{
@@ -120,6 +140,10 @@ function checkLose(){
 function gameReset(){
   console.log(checkLose(), checkWin());
   if(checkLose()||checkWin()){
+    document.getElementById('game-area').style.display = 'none';
+    document.getElementById("on-win").style.display = '';
+    document.getElementById('space-to-start').innerHTML = "Press space to play again!";
+    document.getElementById('space-to-start').style.display = '';
     guessCount= 8;
     curGuess = "";
     guessedLetters = [];
@@ -131,56 +155,35 @@ function gameReset(){
 }
 
 
-
-
 //setup game function
 function gameOn(){
-  wordPicker();
+
+    document.onkeyup = function(event){
+        if(event.keyCode ===32){
+            document.getElementById('game-area').style.display = '';
+            document.getElementById('space-to-start').style.display = 'none';
+            document.getElementById("on-win").style.display = 'none';
+            wordPicker();
+            document.onkeyup = function(event){
+            if(event.keyCode >= 65 && event.keyCode  <= 90){
+                curGuess = event.key;
+                console.log(curGuess);
+                checkGuess(curGuess);
+                gameReset();
+            }
+        };
   //update the word-field with hiddenWord
   document.getElementById('word-field').innerHTML = wordConverter(curWord);
   document.getElementById('guessed').innerHTML = guessedLetters;
+        }
+    };
 }
-
 
 
 //update curGuess variable excluding non-alphabetic characters
 //run curGuess through guess check funtion
-document.onkeyup = function(event){
-  if(event.keyCode >= 65 && event.keyCode  <= 90){
-  curGuess = event.key;
-  console.log(curGuess);
-  checkGuess(curGuess);
-  gameReset();
-}
- 
-};
   
-
 gameOn();
 console.log(curWord);
 console.log(hiddenWord);
-
-
-
-
-
-
-// checkGuess("l");
-
-
-
-
-
-
-
-
-// checkWin();
-
-
-
-  // function updater(){
-  //     document.getElementById("wins").innerHTML = winCount;
-  //     document.getElementById("loses").innerHTML = loseCount;
-  //     document.getElementById("guesses").innerHTML = guessCount;
-  //   }
-  //   document.onkeypress(updater());
+console.log(quotes[curWord]);
