@@ -24,6 +24,8 @@ var images = {
   "Admiral Akbar" : "assets/images/akbar.jpg"
 };
 
+var audioElement = document.getElementById('play-audio');
+
 // var startAudio = Audio(assets/audio/start.wav);
 // startAudio.play();
 
@@ -83,6 +85,8 @@ function checkGuess(guess){
   var checkThis = curWord.toLowerCase().split("");
   if(checkThis.indexOf(guess) ===-1){
     if(guessedLetters.indexOf(guess) === -1){
+     audioElement.setAttribute("src", "assets/audio/wrong.wav");
+      playAudio();
       guessedLetters.push(guess);
       guessCount--;
     }
@@ -92,6 +96,8 @@ function checkGuess(guess){
     } else {
   for(var i = 0; i<checkThis.length; i++){
     if(guess === checkThis[i]){
+      audioElement.setAttribute("src", "assets/audio/right.wav");
+      playAudio();
       hiddenWord[i] = curWord.split("")[i];
       document.getElementById('word-field').innerHTML = hiddenWord.join(" ");
       checkWin();
@@ -109,6 +115,8 @@ function checkWin(){
   //.replace to fix my goofy work around from earlier to make the array's equal again
   console.log(hiddenWord.join('').replace("&nbsp", " "), curWord);
   if(hiddenWord.join('').replace("&nbsp", " ") === curWord){
+    audioElement.setAttribute("src", "assets/audio/win.wav");
+      playAudio();
     winCount++;
     document.getElementById('wins').innerHTML = winCount;
     document.getElementById('win-img').src = images[curWord];
@@ -124,6 +132,8 @@ function checkWin(){
 //update lose variable and html
 function checkLose(){
   if(guessCount === 0){
+    audioElement.setAttribute("src", "assets/audio/lose.wav");
+      playAudio();
     loseCount++;
     document.getElementById('loses').innerHTML = loseCount;
     document.getElementById('win-img').src = "assets/images/lose.gif";
@@ -154,6 +164,15 @@ function gameReset(){
 
 }
 
+function playAudio() {
+    var audio = document.getElementById('play-audio');
+    if (audio.paused) {
+        audio.play();
+    }else{
+        audio.currentTime = 0;
+    }
+}
+
 
 //setup game function
 function gameOn(){
@@ -163,9 +182,12 @@ function gameOn(){
             document.getElementById('game-area').style.display = '';
             document.getElementById('space-to-start').style.display = 'none';
             document.getElementById("on-win").style.display = 'none';
+            audioElement.setAttribute("src", "assets/audio/start.wav");
+            playAudio();
             wordPicker();
             document.onkeyup = function(event){
             if(event.keyCode >= 65 && event.keyCode  <= 90){
+                playAudio();
                 curGuess = event.key;
                 console.log(curGuess);
                 checkGuess(curGuess);

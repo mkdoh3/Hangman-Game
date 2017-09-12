@@ -38,10 +38,12 @@ body {
 }
 
 .game-text {
-	font-size: 2.5rem;
+	font-weight: bold;
+	font-size: 3rem;
 	position: absolute;
-	bottom: 5rem;
-	text-align: center
+	bottom: 6rem;
+	text-align: center;
+	letter-spacing: 10px;
 }
 
 #game-area{
