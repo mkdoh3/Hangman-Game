@@ -6,7 +6,7 @@ body {
 html,
 body {
   height: 100%;
-  min-width: 375px;
+  min-width: 541px;
 }
 
 
@@ -16,7 +16,6 @@ body {
 
 .header-img {
 	display: block;
-	/*margin: 0 auto;*/
 }
 
 
@@ -28,32 +27,74 @@ body {
 	background-size: cover;
 	opacity: 0.6;
 	position: relative;
-	
+	color: #fff;
 }
 
 .game-stats {
-	color: #fff;
 	font-size: 1.25rem;
-	/*padding: 2rem 2rem  */;
 }
 
 .game-text {
 	font-weight: bold;
-	font-size: 3rem;
+	font-size: 2.8rem;
 	position: absolute;
-	bottom: 6rem;
+	bottom: 9rem;
 	text-align: center;
-	letter-spacing: 10px;
+	letter-spacing: .2rem;
 }
 
-#game-area{
-	/*display: none;*/
-}
 
 #space-to-start {
 	text-align: center;
-	/*display:initial; */
 }
 
 
+.guess-text {
+	position: absolute;
+	bottom: 3rem;
+	font-size: 2.25rem;
+	letter-spacing: .25em;
+	text-align: center;
+}
 
+@media screen and (max-width: 915px) {
+	.game-text {
+		font-size: 2.25rem;
+		letter-spacing: .2rem;
+		right: 0;
+	}
+
+	.guess-text {
+		font-size: 2rem;
+		letter-spacing: .2rem;
+	}
+
+
+}
+
+@media screen and (max-width: 768px) {
+	.game-text {
+		font-size: 2rem;
+		letter-spacing: .18rem;
+	}
+	.guess-text {
+		bottom: 3.5rem;
+		right: 0;
+	}
+	.game-stats {
+	font-size: 1.15rem;
+}
+
+@media screen and (max-width: 690px) {
+	.game-text {
+		font-size: 1.5rem;
+		letter-spacing: .15rem;
+		bottom: 11rem;
+	}
+	.guess-text {
+		font-size: 1.25rem;
+		bottom: 6.5rem;
+	}
+	.game-stats {
+	font-size: 1rem;
+}
